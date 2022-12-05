@@ -1,0 +1,89 @@
+struct lista{
+    int info;
+    char inf;
+    lista* urm;
+    lista*prim;
+    lista*ultim;
+    lista*varf;
+}nod;
+
+
+void push(lista *&varf, char element)
+{
+lista *Stiva;
+Stiva=new lista;
+Stiva->inf=element;
+Stiva->urm = varf;
+varf=Stiva;
+}
+
+void pop(lista *&varf )
+{
+    lista *Stiva=varf;
+    varf=varf->urm;
+    delete Stiva;
+
+}
+
+char top(lista *&varf)
+{
+    char element=varf->inf;
+    lista *Stiva=varf;
+    return element;
+}
+
+void eliminare(lista *&Coada)
+{  lista *q,*r;
+    q=new lista;
+    r=new lista;
+    q = q->urm;
+    delete q;
+    if(!Coada)
+        r=NULL;
+
+ }
+
+void inserare(lista *&prim, lista *&ultim, int element)
+{
+    lista *Coada;
+    Coada=new lista;
+    Coada->info=element;
+    Coada->urm=NULL;
+    if(ultim)
+        ultim->urm=Coada;
+    else
+        prim=Coada;
+    ultim=Coada;
+
+}
+int citeste(lista *&prim)
+{
+    int element=prim->info;
+    lista *Coada=prim;
+    return element;
+}
+
+
+bool esteVidaS(lista *&Stiva)//stiva
+{
+return top(Stiva);
+}
+
+bool esteVidaC(lista *&Coada)//coada
+{
+    if(Coada->prim==NULL&&Coada->ultim==NULL)
+    return 1;
+else
+    return 0;
+}
+
+void coada_vida(lista *&Coada)
+{
+    Coada->prim=NULL;
+    Coada->ultim=NULL;
+}
+
+void stiva_vida(lista *&Stiva)
+{
+    Stiva->varf=NULL;
+}
