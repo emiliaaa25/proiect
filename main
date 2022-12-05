@@ -4,7 +4,6 @@ struct lista{
     lista* urm;
     lista*prim;
     lista*ultim;
-    lista*varf;
 }nod;
 
 
