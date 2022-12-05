@@ -87,3 +87,45 @@ void stiva_vida(lista *&Stiva)
 {
     Stiva->varf=NULL;
 }
+
+
+void transformaredininfixinpostifx(lista *&stiva_postfixata,lista *&coada_infixata, lista *Stiva)
+{
+    int i,nr=0;
+    char sirdetransfer[NMAX];
+    char operatori[]="+-*/^x()sclt";
+    bool ok;
+    while(esteVidaC(coada_infixata)==0)
+    {
+        ok=0;
+        strcpy(sirdetransfer,(char*)citeste(coada_infixata));
+        eliminare(coada_infixata);
+        for(i=0;ok!=0&&operatori[i];i++)
+            if(strchr(sirdetransfer,operatori[i]))
+                ok=1;
+        if(ok==0)
+            push(stiva_postfixata,sirdetransfer[nr]);
+        if(ok!=0)
+            {
+                if(strchr(sirdetransfer,')'))
+                {
+                    while(strchr(sirdetransfer,'('))
+                    {
+                        push(stiva_postfixata,top(Stiva));
+                        pop(Stiva);
+                    }
+                    pop(Stiva);
+                }
+            }
+            else {
+                     while(esteVidaS(Stiva)==0&&top(Stiva)=='('&&prioritatecaracter((char*)top(Stiva))>=prioritatecaracter((char*)sirdetransfer[nr]))
+                        {
+                            push(stiva_postfixata,top(Stiva));
+                            pop(Stiva);
+                        }
+                    push(Stiva,sirdetransfer[nr]);
+                  }
+
+        nr++;
+    }
+}
