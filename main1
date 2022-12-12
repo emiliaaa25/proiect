@@ -1,0 +1,27 @@
+ x=a+30;
+            do
+            {car = getch();
+            sir[0]=car;
+            sir[1]=NULL;
+            if(car!=8)
+                {
+                settextstyle(8, HORIZ_DIR, 4 );
+                outtextxy(x,b+30,sir);
+                x+=textwidth(sir);
+                strcat(fun,sir);
+                }
+            else
+                if(strlen(sir)==0)
+                    Beep(1000,500);
+                else
+                {
+                setcolor(BLACK);
+                settextstyle(8, HORIZ_DIR, 4 );
+                outtextxy(x,b+30,sir);
+                x-=textwidth(sir);
+                sir[strlen(sir)-1]='\0';
+                strcat(fun,sir);
+                setcolor(WHITE);
+                }
+            }
+            while(car!=13);
