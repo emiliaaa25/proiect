@@ -1,8 +1,6 @@
-void push2(lista *&varf, double element)
+bool esteVidaS(lista *&Stiva)//stiva
 {
-lista *Stiva;
-Stiva=new lista;
-Stiva->inf=element;
-Stiva->urm = varf;
-varf=Stiva;
+if(top(Stiva)==NULL)
+    return 1;
+return 0;
 }
