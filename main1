@@ -1,117 +1,306 @@
+struct nod{
+    double info;
+    char inf;
+    nod *urm;
+};
+nod *infixata,*postfixata,*S,*p,*varf,*prim,*ultim;
 
-
-
-
-double transformaredininfixinpostifx(double x)
+void stiva_vida(nod *&S)
 {
-    char  *operator1[256], valpr[256];
-    lista *value,*operatori;
-    stiva_vida(value);
-    stiva_vida(operatori);
-    valpr[0]=NULL;
-    while(esteVidaS(infixata)==0)
-    {
-        if(top(infixata)=='(')
-                {push(operatori,top(infixata));
-                pop(infixata);}
-        else
-             if(top(infixata)=='x')
-                 {push(value,x);pop(infixata);}
-        else
-            if(isdigit(top(infixata)))
-            { char c=top(infixata);
-                double val=atoi((char*)c);
-                push(value,val);
-                pop(infixata);}
-        else
-            if(strchr("+-/^*",top(infixata)!=0))
-                {push(operatori,top(infixata));
-                pop(infixata);}
-        else
-
-            if(top(infixata)==')')
-               {push(operatori,top(infixata));
-               pop(infixata);
-                   while(top(infixata)!='(')
-                    {
-                        if(strchr("+-/^*",top(infixata)!=0))
-                           {push(operatori,top(infixata));
-                           pop(infixata);}
-                           if(strchr("scltr",top(infixata)!=0))
-                           {push(operatori,top(infixata));
-                           pop(infixata);}
-                        else
-                            if(top(infixata)=='x')
-                                {push(value,x);pop(infixata);}
-                            else
-                                if(isdigit(top(infixata)))
-                                    { char c=top(infixata);
-                                    double val=atoi((char*)c);
-                                    push(value,val);pop(infixata);}
-
-                else
-                    if(top(infixata)=='(')
-                    while(top(operatori)!=')'&&esteVidaS(operatori)==0)
-                    {double valoare1, valoare2,answ;
-                        valoare1=top(value);
-                        pop(value);
-                        valoare2=top(value);
-                        pop(value);
-                        char operator1=top(operatori);
-                        if(operator1=='s'||operator1=='c'||operator1=='l'||operator1=='r'||operator1=='t')
-                               {
-                                   answ=operatie_spekiala(operator1,valoare1);
-                                   pop(operatori);
-                                }
-                        else {
-                                answ=operatie(operator1, valoare1, valoare2);
-                                pop(operatori);
-                            }
-                        push2(value,answ);}
-               }
-               }
-                    else
-                    {
-                    while(esteVidaS(operatori)==0&&
-                          prioritatecaracter(top(operatori))>=prioritatecaracter(top(infixata)))
-                    {
-                        double valoare1, valoare2,ans;
-                        valoare1=top(value);
-                        pop(value);
-                        valoare2=top(value);
-                        pop(value);
-                        char operator1=top(operatori);
-                        if(operator1=='s'||operator1=='c'||operator1=='l'||operator1=='r'||operator1=='t')
-                               {
-                                   ans=operatie_spekiala(operator1,valoare1);
-                                   pop(operatori);
-                                }
-                        else {
-                                ans=operatie(operator1, valoare1, valoare2);
-                                pop(operatori);
-                            }
-                        push(value,ans);}
-
-                    push(operatori,top(infixata));
-                    }
-    while(esteVidaS(operatori)==0)
-
-            {double valoare1, valoare2;
-                        valoare1=top(value);
-                        pop(value);
-                        valoare2=top(value);
-                        pop(value);
-                        char operator1=top(operatori);
-                        double ans=operatie(operator1, valoare1, valoare2);
-                        push(value,ans);}
-    }
-
-    return top(value);
-
-    //functia noastra este in top(value)
+    S=NULL;
 }
 
+void eliminare(nod *&postfixata)
+{
+    nod *q;
+    q=postfixata;
+    postfixata=postfixata->urm;
+    delete q;
+ }
+
+
+void inserare1(nod *&postfixata, char element)
+{
+  nod *q =new nod;
+  q->inf=element;
+  q->urm=NULL;
+  if(postfixata==NULL)
+    postfixata=q;
+  else
+  {
+    nod *p=postfixata;
+    while(p->urm!=NULL)
+      p=p->urm;
+    p->urm=q;
+  }
+}
+
+void inserare2(nod *&postfixata, double element)
+{
+  nod *q =new nod;
+  q->info=element;
+  q->urm=NULL;
+  if(postfixata==NULL)
+    postfixata=q;
+  else
+  {
+    nod *p=postfixata;
+    while(p->urm!=NULL)
+      p=p->urm;
+    p->urm=q;
+  }
+}
+
+char citeste1(nod *&prim)
+{
+    char element=prim->inf;
+    return element;
+}
+
+char citeste2(nod *&p)
+{
+    double element=p->info;
+    return element;
+}
+
+bool esteVidaC(nod *&prim)//coada
+{
+    if(prim==NULL)
+    return 1;
+else
+    return 0;
+}
+
+void coada_vida(nod *&prim)
+{
+    prim=NULL;
+}
+
+
+void push(nod *&varf, char element)
+{
+nod *Stiva;
+Stiva=new nod;
+Stiva->inf=element;
+Stiva->urm = varf;
+varf=Stiva;
+}
+char top(nod *&varf)
+{
+    char element=varf->inf;
+    return element;
+}
+
+double top1(nod *&stiva)
+{
+    double element=stiva->info;
+    return element;
+}
+bool esteVidaS(nod *&Stiva)//stiva
+{
+    if(top(Stiva))return 0;
+        else return 1;
+}
+void pop(nod *&varf )
+{
+    nod *Stiva=varf;
+    varf=varf->urm;
+    delete Stiva;
+
+}
+
+void push2(nod *&varf, double element)
+{
+nod *Stiva;
+Stiva=new nod;
+Stiva->info=element;
+Stiva->urm = varf;
+varf=Stiva;
+}
+
+void transformarefunctie(char *functie)
+{
+    int i=0,j,nr=0,k;
+    double numar;
+    while(i<=strlen(functie)-1)
+    {
+        if(isdigit(functie[i])!=0)
+        {
+            while(isdigit(functie[i])!=0)
+            {
+                vect[nr]=functie[i];
+                i++;
+                nr++;
+            }
+        vect[nr]=' ';nr++;
+        }
+        else if(strchr("+-*^/)(",functie[i]))
+                {
+                    vect[nr]=functie[i];
+                    nr++;i=i+1;
+                    vect[nr]=' ';nr++;
+                }
+        else
+            if(functie[i]=='x')
+            {vect[nr]=functie[i];
+            nr++;
+            i++;
+            vect[nr]=' ';nr++;}
+    else
+            {
+                if(strchr("s",functie[i])!=0)
+                    {
+                    vect[nr]=functie[i];
+                    nr++;i=i+3;
+                    vect[nr]=' ';nr++;
+                    }
+                if(strchr("c",functie[i])!=0)
+                    {
+                    vect[nr]=functie[i];
+                    nr++;i=i+3;
+                    vect[nr]=' ';nr++;
+                    }
+                if(strchr("l",functie[i])!=0)
+                    {
+                    vect[nr]=functie[i];
+                    nr++;i=i+2;
+                    vect[nr]=' ';nr++;
+                    }
+                if(strchr("t",functie[i])!=0)
+                    {
+                    vect[nr]=functie[i];
+                    nr++;
+                    }
+                if(strchr("g",functie[i])!=0)
+                    {
+                    vect[nr]=functie[i];
+                    nr++;
+                    }
+                if(strchr("r",functie[i])!=0)
+                    {
+                    vect[nr]=functie[i];
+                    nr++;
+                    }
+
+
+    }
+}
+char s[256];s[0]=NULL; double l;
+for(i=0;i<=strlen(vect)-1;i++)
+   {
+    if(vect[i]!=' '&&isdigit(vect[i])==0)
+        inserare1(infixata,vect[i]);
+    else
+       {
+        if(isdigit(vect[i]))
+        {k=0;
+        for(j=i;j<strlen(vect);j++)
+            if(isdigit(vect[j]))
+                k++;
+        strncat(s,vect+i,k);
+        s[k+1]=NULL;
+        l=atol(s);
+        inserare2(infixata,l);
+        s[0]=NULL;
+        i=i+k-1;}
+}
+}
+
+}
+
+void transformaredininfixinpostifx( )
+{
+    while (esteVidaC(infixata)==0)
+    {
+        if(citeste1(infixata)=='x')// x=necunoscuta
+                 {
+                     inserare1(postfixata,'x');
+                     eliminare(infixata);
+                }
+
+        else
+            if(citeste2(infixata)>=0)//cifre
+            {
+                inserare2(postfixata,citeste2(infixata));
+                eliminare(infixata);
+            }
+                else
+                    if(citeste1(infixata)==')')
+                        {
+                            while(top(S)!='(')
+                                {
+                                inserare1(postfixata,top(S));
+                                pop(S);
+                                }
+                        pop(S);
+                        }
+                    else
+                        {
+                            while (esteVidaS(S)==0&&top(S)!='('&&prioritatecaracter(top(S))>= prioritatecaracter(citeste1(infixata)))
+                            {
+                            inserare1(postfixata,top(S));
+                            pop(S);
+                            }
+                        push(S,citeste1(infixata));
+                        }
+    }
+    while (esteVidaS(S)==0)
+    {
+    inserare1(postfixata,top(S));
+    pop(S);
+    }
+}
+
+double evaluare(double x)
+{   
+    stiva_vida(S);
+    while(esteVidaC(postfixata)==0)
+    {
+        if(citeste1(postfixata)=='x')// x=necunoscuta
+                 {
+                     push2(S,x);
+                     eliminare(postfixata);
+                }
+
+        else
+            if(citeste2(infixata)>=0)//cifre
+            {
+                push2(S,citeste2(postfixata));
+                eliminare(postfixata);
+            }
+
+        else
+            if(strchr("+-/^*",citeste1(postfixata)!=0))
+                        {double valoare1, valoare2,answ;
+                        valoare1=top(S);
+                        pop(S);
+                        valoare2=top(S);
+                        pop(S);
+                        char operator1=citeste1(postfixata);
+                        answ=operatie(operator1, valoare1, valoare2);
+                        eliminare(postfixata);
+                        push(S,answ);
+                        }
+            else
+                if(strchr("+-/^*",citeste1(postfixata)!=0))
+                    {
+                    double valoare1, valoare2,answ;
+                    valoare1=top(S);
+                    pop(S);
+                    char operator1=citeste1(postfixata);
+                    answ=operatie_speciala(operator1,valoare1);
+                    eliminare(postfixata);
+                    push(S,answ);
+                    }
+                }
+
+    double val=top(S);pop(S);
+    return val;
+}
 double f(double x)
 {
-    return transformaredininfixinpostifx(x);
+    //return 2*x*cos(x);
+    double m;
+    m=evaluare(x);
+    return m;
 }
