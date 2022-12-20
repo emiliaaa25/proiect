@@ -283,9 +283,10 @@ double f(double x)
     return m;
 }
 
-int evaluator()
+int k,v[50];
+void evaluator()
 {
-    int nr=0,nr1=0,i;
+    int nr=0,ok=0,nr1=0,i;
     for(i=0;i<=strlen(fun)-1;i++)
     {
     if(fun[i]=='(')
@@ -293,174 +294,181 @@ int evaluator()
     if(fun[i]==')')
         nr1++;
     if(fun[i]=='('&&fun[i+1]==')')
-        return 1;
+        {ok=1;v[++k]=ok;}
     if(fun[i]=='('&&fun[i+1]=='+')
-        return 2;
+        {ok=2;v[++k]=ok;}
     if(fun[i]=='('&&fun[i+1]=='-')
-        return 3;
+        {ok=3;v[++k]=ok;}
     if(fun[i]=='('&&fun[i+1]=='*')
-        return 4;
+        {ok=4;v[++k]=ok;}
     if(fun[i]=='('&&fun[i+1]=='/')
-        return 5;
+        {ok=5;v[++k]=ok;}
     if(fun[i]=='('&&fun[i+1]=='^')
-        return 6;
+        {ok=6;v[++k]=ok;}
     if(fun[i]==')'&&fun[i]=='(')
-        return 7;
+        {ok=7;v[++k]=ok;}
     if(fun[i]==')'&&fun[i+1]=='s')
-        return 8;
+        {ok=8;v[++k]=ok;}
     if(fun[i]==')'&&fun[i+1]=='c')
-        return 9;
+        {ok=9;v[++k]=ok;}
     if(fun[i]==')'&&fun[i+1]=='l')
-        return 10;
+        {ok=10;v[++k]=ok;}
     if(fun[i]==')'&&fun[i+1]=='r')
-        return 11;
+        {ok=11;v[++k]=ok;}
     if(fun[i]==')'&&fun[i+1]=='t')
-        return 12;
+        {ok=12;v[++k]=ok;}
     if(fun[i]==')'&&fun[i+1]=='x')
-        return 13;
+        {ok=13;v[++k]=ok;}
     if(fun[i]==')'&&isdigit(fun[i+1]))
-        return 14;
+        {ok=14;v[++k]=ok;}
     if(fun[i]=='+'&&fun[i+1]=='+')
-        return 15;
+        {ok=15;v[++k]=ok;}
     if(fun[i]=='+'&&fun[i+1]=='-')
-        return 16;
+        {ok=16;v[++k]=ok;}
     if(fun[i]=='+'&&fun[i+1]=='*')
-        return 17;
+        {ok=17;v[++k]=ok;}
     if(fun[i]=='+'&&fun[i+1]=='/')
-        return 18;
+        {ok=18;v[++k]=ok;}
     if(fun[i]=='+'&&fun[i+1]=='^')
-        return 19;
+        {ok=19;v[++k]=ok;}
     if(fun[i]=='-'&&fun[i+1]=='+')
-        return 20;
+        {ok=20;v[++k]=ok;}
     if(fun[i]=='-'&&fun[i+1]=='-')
-        return 21;
+        {ok=21;v[++k]=ok;}
     if(fun[i]=='-'&&fun[i+1]=='*')
-        return 22;
+        {ok=22;v[++k]=ok;}
     if(fun[i]=='-'&&fun[i+1]=='/')
-        return 23;
+        {ok=23; v[++k]=ok;}
     if(fun[i]=='-'&&fun[i+1]=='^')
-        return 24;
+        {ok=24;v[++k]=ok;}
     if(fun[i]=='*'&&fun[i+1]=='+')
-        return 25;
+        {ok=25; v[++k]=ok;}
     if(fun[i]=='*'&&fun[i+1]=='-')
-        return 26;
+        {ok=26; v[++k]=ok;}
     if(fun[i]=='*'&&fun[i+1]=='*')
-        return 27;
+        {ok=27; v[++k]=ok;}
     if(fun[i]=='*'&&fun[i+1]=='/')
-        return 28;
+        {ok=28; v[++k]=ok;}
     if(fun[i]=='*'&&fun[i+1]=='^')
-        return 29;
+        {ok=29; v[++k]=ok;}
     if(fun[i]=='/'&&fun[i+1]=='+')
-        return 30;
+        {ok=30; v[++k]=ok;}
     if(fun[i]=='/'&&fun[i+1]=='-')
-        return 31;
+        {ok=31; v[++k]=ok;}
     if(fun[i]=='/'&&fun[i+1]=='*')
-        return 32;
+        {ok=32; v[++k]=ok;}
     if(fun[i]=='/'&&fun[i+1]=='/')
-        return 33;
+        {ok=33; v[++k]=ok;}
     if(fun[i]=='/'&&fun[i+1]=='^')
-        return 34;
+        {ok=34; v[++k]=ok;}
     if(fun[i]=='^'&&fun[i+1]=='+')
-        return 35;
+        {ok=35; v[++k]=ok;}
     if(fun[i]=='^'&&fun[i+1]=='-')
-        return 36;
+        {ok=36; v[++k]=ok;}
     if(fun[i]=='^'&&fun[i+1]=='*')
-        return 37;
+        {ok=37; v[++k]=ok;}
     if(fun[i]=='^'&&fun[i+1]=='/')
-        return 38;
+        {ok=38; v[++k]=ok;}
     if(fun[i]=='^'&&fun[i+1]=='^')
-        return 39;
-    if(nr!=nr1)
-        return 40;
+        {ok=39; v[++k]=ok;}
     }
-
-    return 41;
+    if(nr!=nr1)
+        {ok=40; v[++k]=ok;}
+    if(k==0)
+        ok=41;
 
 }
  void mesaj_evaluator(int width, int height)
- {  settextstyle(8, HORIZ_DIR, 3);
-    if(evaluator()==1)
+ {  settextstyle(8, HORIZ_DIR, 3);int i;
+ evaluator();
+ for(i=0;i<=k;i++)
+ {
+    if(v[i]==1)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza deschisa urmata de o paranteza inchisa");
-    if(evaluator()==2)
-        outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza deschisa urmata de +");
-    if(evaluator()==3)
+    if(v[i]==2)
+        {outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza deschisa urmata de +");
+        delay(60);
+        setcolor(BLACK);}
+    if(v[i]==3)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza deschisa urmata de -");
-    if(evaluator()==4)
+    if(v[i]==4)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza deschisa urmata de *");
-    if(evaluator()==5)
+    if(v[i]==5)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza deschisa urmata de /");
-    if(evaluator()==6)
+    if(v[i]==6)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza deschisa urmata de ^");
-    if(evaluator()==7)
+    if(v[i]==7)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza deschisa urmata de o paranteza inchisa");
-    if(evaluator()==8)
+    if(v[i]==8)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza inchisa urmata de functia sinus");
-    if(evaluator()==9)
+    if(v[i]==9)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza inchisa urmata de functia cosinus");
-    if(evaluator()==10)
+    if(v[i]==10)
+        setcolor(WHITE);
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza inchisa urmata de functia logaritmica");
-    if(evaluator()==11)
+    if(v[i]==11)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza inchisa urmata de functia radical");
-    if(evaluator()==12)
+    if(v[i]==12)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza inchisa urmata de functia tangenta");
-    if(evaluator()==13)
+    if(v[i]==13)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza inchisa urmata de constanta x");
-    if(evaluator()==14)
+    if(v[i]==14)
         outtextxy(width/2,height/2+150,"Nu poate aparea o paranteza inchisa urmata de un numar");
-    if(evaluator()==15)
+    if(v[i]==15)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul + urmat de simbolul + ");
-    if(evaluator()==16)
+    if(v[i]==16)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul + urmat de simbolul - ");
-    if(evaluator()==17)
+    if(v[i]==17)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul + urmat de simbolul * ");
-    if(evaluator()==18)
+    if(v[i]==18)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul + urmat de simbolul / ");
-    if(evaluator()==19)
+    if(v[i]==19)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul + urmat de simbolul ^ ");
-    if(evaluator()==20)
+    if(v[i]==20)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul - urmat de simbolul + ");
-    if(evaluator()==21)
+    if(v[i]==21)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul - urmat de simbolul - ");
-    if(evaluator()==22)
+    if(v[i]==22)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul - urmat de simbolul * ");
-    if(evaluator()==23)
+    if(v[i]==23)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul - urmat de simbolul / ");
-    if(evaluator()==24)
+    if(v[i]==24)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul - urmat de simbolul ^ ");
-    if(evaluator()==25)
+    if(v[i]==25)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul * urmat de simbolul + ");
-    if(evaluator()==26)
+    if(v[i]==26)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul * urmat de simbolul - ");
-    if(evaluator()==27)
+    if(v[i]==27)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul * urmat de simbolul * ");
-    if(evaluator()==28)
+    if(v[i]==28)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul * urmat de simbolul / ");
-    if(evaluator()==29)
+    if(v[i]==29)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul * urmat de simbolul ^ ");
-    if(evaluator()==30)
+    if(v[i]==30)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul / urmat de simbolul + ");
-    if(evaluator()==31)
+    if(v[i]==31)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul / urmat de simbolul - ");
-    if(evaluator()==32)
+    if(v[i]==32)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul / urmat de simbolul * ");
-    if(evaluator()==33)
+    if(v[i]==33)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul / urmat de simbolul / ");
-    if(evaluator()==34)
+    if(v[i]==34)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul / urmat de simbolul ^ ");
-    if(evaluator()==35)
+    if(v[i]==35)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul ^ urmat de simbolul + ");
-    if(evaluator()==36)
+    if(v[i]==36)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul ^ urmat de simbolul - ");
-    if(evaluator()==37)
+    if(v[i]==37)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul ^ urmat de simbolul * ");
-    if(evaluator()==38)
+    if(v[i]==38)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul ^ urmat de simbolul / ");
-    if(evaluator()==39)
+    if(v[i]==39)
         outtextxy(width/2,height/2+150,"Nu poate aparea simbolul ^ urmat de simbolul ^ ");
-    if(evaluator()==40)
+    if(v[i]==40)
         outtextxy(width/2,height/2+150,"Numarul de paranteze deschise nu coincide cu numarul de paranteze inchise ");
  }
- 
+ }
+
  
  setfillstyle(0,BLACK);
     bar(width/2-550,height/2+70,width/2+550,height/2+250);//text 3
