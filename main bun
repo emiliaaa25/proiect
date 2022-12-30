@@ -834,7 +834,7 @@ void click_pe_fereastra_pr(double A, double B, int ok, int poza, int &limba,int 
     }
 }
 
-void caseta_text_functie(int width, int height)
+void caseta_text_functie(int width, int height,int ok)
 {
 int a,b,c,d;
 int i;
@@ -884,7 +884,7 @@ a=width/2-320; b=height/3+70; c=width/4+655; d=height/3+130;
         }
 
 
-void caseta_text_capat_stanga(int width, int height,double &A)
+void caseta_text_capat_stanga(int width, int height,double &A,int ok)
 {
     int a,b,c,d;
     int i;
@@ -925,7 +925,7 @@ void caseta_text_capat_stanga(int width, int height,double &A)
         A=atof((char*)capatst);
 }
 
-void caseta_text_capat_dreapta(int width, int height,double &A,double &B)
+void caseta_text_capat_dreapta(int width, int height,double &A,double &B,int ok)
 {
   int a,b,c,d;
     int i;
@@ -1008,19 +1008,19 @@ else if(coordx>=width/16-31&&coordx<=width/10&&coordy>=height/5-145&&coordy<=hei
         {
             //daca se apasa caseta cu "Introduceti functia aici:"
             //se schimba culoare dreptunghiului in galben la click
-            caseta_text_functie(width,height);
+            caseta_text_functie(width,height,ok);
             click_pe_Grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic,capatst,capatdr);
         }
 
     else if(coordx>=(width/2-320)&&coordx<=(width/4+320)&&coordy>=(height/4-10)&&coordy<=(height/4+50))//stanga
         {
 
-        caseta_text_capat_stanga(width,height,A);
+        caseta_text_capat_stanga(width,height,A,ok);
         click_pe_Grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic,capatst,capatdr);
         }
     else if(coordx>=(width/4+340)&&coordx<=(width/4+655)&&coordy>=(height/4-10)&&coordy<=(height/4+50))//dreapta
         {
-         caseta_text_capat_dreapta(width,height,A,B);
+         caseta_text_capat_dreapta(width,height,A,B,ok);
         click_pe_Grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic,capatst,capatdr);
         }
     else if(coordx>=(width/2+460)&&coordx<=(width/2+540)&&coordy>=(height/2-18)&&coordy<=(height/2+7))//buton spre functie
@@ -1602,10 +1602,15 @@ double calculare_f_din_postf(double x)
 
         else
             if(isdigit(postfixata->inf))//cifre
-            {   char c=postfixata->inf;
-                val=c-'0';
+            {   
+                val=0;
+                while(isdigit(postfixata->inf))
+                      {
+                        char c=postfixata->inf;
+                        val=val*10+(c-'0');
+                        eliminare(postfixata);
+                      }
                 push2(S,val);
-                eliminare(postfixata);
             }
 
         else
