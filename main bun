@@ -989,9 +989,9 @@ a=width/4+340; b=height/4-10; c=width/4+655; d=height/4+50;
                 pozitiedr++;
                 settextstyle(8, HORIZ_DIR, 4 );
                 setfillstyle(0,BLACK);
-                bar(width/2+340,height/4-10,width/4+655,height/4+50);
+                bar(width/4+340,height/4-10,width/4+655,height/4+50);
                 setcolor(WHITE);
-                rectangle(width/2+340,height/4-10,width/4+655,height/4+50);
+                rectangle(width/4+340,height/4-10,width/4+655,height/4+50);
                 settextjustify(LEFT_TEXT, CENTER_TEXT);
                 outtextxy(a+30,b+30,capatdr);
                 }
@@ -999,9 +999,9 @@ a=width/4+340; b=height/4-10; c=width/4+655; d=height/4+50;
                 {
                 setcolor(WHITE);
                 setfillstyle(0,BLACK);
-                bar(width/2+340,height/4-10,width/4+655,height/4+50);
+                bar(width/4+340,height/4-10,width/4+655,height/4+50);
                 setcolor(WHITE);
-                rectangle(width/2+340,height/4-10,width/4+655,height/4+50);
+                rectangle(width/4+340,height/4-10,width/4+655,height/4+50);
                 settextstyle(8, HORIZ_DIR, 4 );
                 capatdr[pozitiedr-1]='\0';
                 outtextxy(a+30,b+30,capatdr);
