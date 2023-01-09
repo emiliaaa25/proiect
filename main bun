@@ -909,6 +909,7 @@ a=width/2-320; b=height/3+70; c=width/4+655; d=height/3+130;
                 rectangle(width/2-320,height/3+70,width/4+655,height/3+130);
                 settextstyle(8, HORIZ_DIR, 4 );
                 fun[pozitiei-1]='\0';
+                settextjustify(LEFT_TEXT, CENTER_TEXT);
                 outtextxy(a+30,b+30,fun);
                 pozitiei--;
 
@@ -917,9 +918,12 @@ a=width/2-320; b=height/3+70; c=width/4+655; d=height/3+130;
             while(car!=13);
 
             if(car==13)
-                if(k==0)
                 {
                     a=width/2-550; b=height/2+70; c=width/2+550; d=height/2+250;
+                    setfillstyle(0,BLACK);
+                    bar(width/2-550,height/2+70,width/2+550,height/2+250);//text 3
+                    setcolor(WHITE);
+                    rectangle(width/2-550,height/2+70,width/2+550,height/2+250);
                     schimbare_culoare_buton(a,b,c,d);
                     schimbare_sunet(ok);
                     mesaj_evaluator(width,height);
@@ -961,6 +965,7 @@ a=width/2-320; b=height/4-10; c=width/4+320; d=height/4+50;
                 rectangle(width/2-320,height/4-10,width/4+320,height/4+50);
                 settextstyle(8, HORIZ_DIR, 4 );
                 capatst[pozitiest-1]='\0';
+                settextjustify(LEFT_TEXT, CENTER_TEXT);
                 outtextxy(a+30,b+30,capatst);
                 pozitiest--;
 
@@ -1004,6 +1009,7 @@ a=width/4+340; b=height/4-10; c=width/4+655; d=height/4+50;
                 rectangle(width/4+340,height/4-10,width/4+655,height/4+50);
                 settextstyle(8, HORIZ_DIR, 4 );
                 capatdr[pozitiedr-1]='\0';
+                settextjustify(LEFT_TEXT, CENTER_TEXT);
                 outtextxy(a+30,b+30,capatdr);
                 pozitiedr--;
 
@@ -1012,9 +1018,13 @@ a=width/4+340; b=height/4-10; c=width/4+655; d=height/4+50;
             while(car!=13);
 
             B=atof((char*)capatdr);
-        if(car==13)
+            if(car==13)
                 {
                     a=width/2-550; b=height/2+70; c=width/2+550; d=height/2+250;
+                    setfillstyle(0,BLACK);
+                    bar(width/2-550,height/2+70,width/2+550,height/2+250);//text 3
+                    setcolor(WHITE);
+                    rectangle(width/2-550,height/2+70,width/2+550,height/2+250);
                     schimbare_culoare_buton(a,b,c,d);
                     schimbare_sunet(ok);
                     evaluare_interval(width,height,A,B);
@@ -1040,6 +1050,7 @@ void click_pe_Grafic(double &A, double &B, int width, int height,int ok,int poza
             closegraph();
             fereastra_principala(width, height,ok,poza,limba);
             click_pe_fereastra_pr(A,B,ok,poza,limba,culoarerama, culoaregrafic);
+
         }
 else if(coordx>=width/16-31&&coordx<=width/10&&coordy>=height/5-145&&coordy<=height/5-114)//exit
         {
@@ -1889,25 +1900,37 @@ void evaluator()
 }
 
 void evaluare_interval(int width, int height,double A, double B)
-{
+{   k2=0;contorev=0;
     char t[256];
     if(A>=B)//intervalul nu e bun
         {
             settextstyle(8, HORIZ_DIR, 3);
+            settextjustify(CENTER_TEXT,contorev);
+            setcolor(WHITE);
             strcpy(t,"Intervalul nu este bine ales");
             outtextxy(width/2,height/2+100+contorev,t);
             k2=0;
             contorev+=27;
         }
-        else k2=1;
+        else
+        {
+        settextstyle(8, HORIZ_DIR, 3);
+        settextjustify(CENTER_TEXT,contorev);
+        setcolor(WHITE);
+        strcpy(t,"Intervalul e bine ales");
+        outtextxy(width/2,height/2+100+contorev,t);
+        k2=1;
+        contorev+=27;}
+
 }
 
 void mesaj_evaluator(int width, int height)
- {
+ {  k=0;contorev=0;
     char t[256];
     settextstyle(8, HORIZ_DIR, 3);
     int i;
     evaluator();
+    settextjustify(CENTER_TEXT,contorev);
     setcolor(WHITE);
 
  for(i=0;i<=k;i++)
@@ -2369,7 +2392,9 @@ double asimptota_oblica()
         if(m==floor(m)&&m!=0)
             n=(c*m-d)/b;
             if(n==floor(n))
-               return 0;// y=m-n*x;
+               return m+n;
+            else
+                return INFINIT;
         }
         }
 }
@@ -2446,5 +2471,18 @@ void desenare_asimptote(double A, double B)
         a=a*unitate;
         setcolor(BLUE);
         line(punctmijloc-a,TOP,punctmijloc-a,BOTTOM);
+        }
+    if(c==EPSILON)
+        {
+            int b=asimptota_oblica();
+            unitate1=(STANGA+DREAPTA)/dim;
+            punctmijloc1=(STANGA+DREAPTA)/2;
+            unitate=(TOP+BOTTOM)/dim;
+            punctmijloc=(TOP+BOTTOM)/2;
+            unitate1=unitate1*b;
+            unitate=unitate*b;
+            setcolor(MAGENTA);
+            line(punctmijloc1+unitate1,punctmijloc+unitate,punctmijloc1-unitate1,punctmijloc-unitate);
+
         }
 }
