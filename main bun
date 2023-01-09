@@ -352,6 +352,7 @@ void fereastra_cu_graficul_desenat(double A, double B,int ok, int poza, int limb
         else if(culoaregrafic==3)setcolor(CYAN);
         else if(culoaregrafic==4)setcolor(GREEN);
 
+
     redesenare_grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic);//graficul efectiv
 }
 
@@ -1336,12 +1337,11 @@ void redesenare_grafic(double A, double B, int width, int height,int ok,int poza
                 sprintf(charintegrala," %lf",valoareintegrala);
                 outtextxy(width/4+430, height-100,charintegrala);
             }
-    click_back_grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic); //daca lasi asta aici, nu iti mai ia do while ul
     char car;
     do
         {
             car = getch();
-            if(car==KEY_RIGHT||car=='d')//dr
+            if((car==KEY_RIGHT||car=='d')&&car!=13)//dr
                 {
                     cleardevice();
                     A+=2;
@@ -1402,9 +1402,8 @@ void redesenare_grafic(double A, double B, int width, int height,int ok,int poza
                     setcolor(DARKGRAY);
                     desenare_axe(A,B);
                     desenare_asimptote(A,B);
-                    click_back_grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic);
                 }
-            else if(car==KEY_LEFT||car=='a')//st
+            else if((car==KEY_LEFT||car=='a')&&car!=13)//st
             {
                 cleardevice();
                 A-=2;
@@ -1465,9 +1464,8 @@ void redesenare_grafic(double A, double B, int width, int height,int ok,int poza
                 setcolor(DARKGRAY);
                 desenare_axe(A,B);
                 desenare_asimptote(A,B);
-                click_back_grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic);
                 }
-            else if(car=='w'||car==KEY_UP)//ZOOM -
+            else if((car=='w'||car==KEY_UP)&&car!=13)//ZOOM -
             {
                 if((A+2)<(B-2))
                 {
@@ -1531,10 +1529,9 @@ void redesenare_grafic(double A, double B, int width, int height,int ok,int poza
                 setcolor(DARKGRAY);
                 desenare_axe(A,B);
                 desenare_asimptote(A,B);
-                click_back_grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic);
                 }
             }
-            else if(car=='s'||car==KEY_DOWN)//ZOOM +
+            else if((car=='s'||car==KEY_DOWN)&&car!=13)//ZOOM +
             {
                 cleardevice();
                 A-=2;
@@ -1595,10 +1592,12 @@ void redesenare_grafic(double A, double B, int width, int height,int ok,int poza
                 setcolor(DARKGRAY);
                 desenare_axe(A,B);
                 desenare_asimptote(A,B);
-                click_back_grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic);
             }
         }
     while(car!=13);
+
+    click_back_grafic(A,B,width,height,ok,poza,limba,culoarerama,culoaregrafic);
+
 }
 
 void transformare_functie()
@@ -1889,7 +1888,7 @@ void evaluator()
     if(strchr("-*/^",fun[0]))
         {ok=41; v[++k]=ok;}
 
-    if(strchr("+-*/^",fun[strlen(fun)-2]))
+    if(strchr("+-*/^",fun[strlen(fun)-1]))
         {ok=42; v[++k]=ok;}
 
     if(nr!=nr1)
@@ -2144,7 +2143,7 @@ void desenare_axe(double A, double B)
 double asimptota_orizontala()
 {
     double c,a,b,k,l,ok=0;int i,j,ok1=0;
-    if(strchr(temp,'/'))
+    if(strchr(temp,'/')&&!strchr(temp,'s')&&!strchr(temp,'c')&&!strchr(temp,'l')&&!strchr(temp,'r')&&!strchr(temp,'t'))
         {for(i=0;i<=strlen(temp)-1;i++)
             if(temp[i]!='/')
                {if(temp[i]=='x'&&ok==0)
@@ -2188,7 +2187,7 @@ double asimptota_orizontala()
 double asimptota_oblica()
 {
     double c,a,b,k,l,e,f,n,m,d;int i,j,ok=0,ok1=0;
-    if(strchr(temp,'/'))
+    if(strchr(temp,'/')&&!strchr(temp,'s')&&!strchr(temp,'c')&&!strchr(temp,'l')&&!strchr(temp,'r')&&!strchr(temp,'t'))
         {for(i=0;i<=strlen(temp)-1;i++)
             if(temp[i]!='/')
                {
@@ -2402,7 +2401,7 @@ double asimptota_oblica()
 double asimptota_verticala()
 {
     double c,a=0,b=0;int i,j,ok1=0;
-    if(strchr(temp,'/'))
+    if(strchr(temp,'/')&&!strchr(temp,'s')&&!strchr(temp,'c')&&!strchr(temp,'l')&&!strchr(temp,'r')&&!strchr(temp,'t'))
         {for(i=0;i<=strlen(temp)-1;i++)
             if(temp[i]=='/')
                     break;
@@ -2463,7 +2462,9 @@ void desenare_asimptote(double A, double B)
             setcolor(MAGENTA);
             line(STANGA,punctmijloc-c,DREAPTA,punctmijloc-c);
         }
-    if(c!=0||c==INFINIT)
+    if(A<0&&B>0)
+{dim=B-A;
+        if(c!=0||c==INFINIT)
     {
         unitate1=(STANGA+DREAPTA)/dim;
         punctmijloc1=(STANGA+DREAPTA)/2;
@@ -2471,10 +2472,13 @@ void desenare_asimptote(double A, double B)
         a=a*unitate;
         setcolor(BLUE);
         line(punctmijloc-a,TOP,punctmijloc-a,BOTTOM);
-        }
+        }}
+    if(A<0&&B>0)
+    {dim=B-A;
     if(c==EPSILON)
         {
             int b=asimptota_oblica();
+            cout<<b;
             unitate1=(STANGA+DREAPTA)/dim;
             punctmijloc1=(STANGA+DREAPTA)/2;
             unitate=(TOP+BOTTOM)/dim;
@@ -2482,7 +2486,8 @@ void desenare_asimptote(double A, double B)
             unitate1=unitate1*b;
             unitate=unitate*b;
             setcolor(MAGENTA);
-            line(punctmijloc1+unitate1,punctmijloc+unitate,punctmijloc1-unitate1,punctmijloc-unitate);
+            line(punctmijloc1,punctmijloc+unitate,punctmijloc1,punctmijloc-unitate);
 
+        }
         }
 }
